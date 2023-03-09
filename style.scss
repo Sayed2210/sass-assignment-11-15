@@ -1,0 +1,79 @@
+@mixin arrow($dir) {
+    content: "";
+    position: absolute;
+    border: 20px solid transparent;
+    #{$dir}: -40px;
+    @if $dir == 'top' {
+        border-bottom-color: red;
+        left: 50%;
+        transform: translateX(-50%);
+    }@else if $dir == 'bottom' {
+        border-top-color: red;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    @else if $dir == 'right' {
+        border-left-color: red;
+        top: 50%;
+        transform: translateY(-50%);
+}
+    @else if $dir == 'left' {
+        border-right-color: red;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+.element {
+    &:before {
+        @include arrow("bottom");
+    }
+}
+.element {
+    &:before {
+        @include arrow("left");
+    }
+}
+$grid_sys: 16;
+
+@for $i from 1 through $grid_sys {
+    .col-#{$i} {
+        width: percentage($i / $grid_sys);
+    }
+}
+$names:
+  "books" 20px red 18,
+  "games" 30px green 18,
+  "dvds" 20px blue 16;
+  @each $name,$size,$color,$font in $names {
+    .#{$name} {
+        padding: $size;
+        font-size: #{$font}px;
+        border-bottom: 2px solid $color;
+        color: #444;
+    }
+  }
+
+$init: 1;
+@for $init from 1 through 5 {
+    .circle-#{$init * 100} {
+        width: $init * 100px;
+        height: $init * 100px;
+        -webkit-border-radius: $init *50px;
+        -moz-border-radius: $init *50px;
+        -ms-border-radius: $init *50px;
+        -o-border-radius: $init *50px;
+        border-radius: $init *50px;
+    }
+}
+@mixin flex-center($width:400px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: $width;
+}
+.box-one {
+    @include flex-center(400px)
+}
+.box-two {
+    @include flex-center;
+}
